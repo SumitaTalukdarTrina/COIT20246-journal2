@@ -1,52 +1,56 @@
-# Week 4 Journal – Network Technologies / Internetworking
+# Week 4 Journal
 
 **Student Name:** Sumita Talukdar Trina
 
+**Topics:** Network Technologies (tutorial) and Internetworking (lecture)
+
 ---
 
-## Task 1: Knowledge Test
+## Task 1 - Knowledge Test
 
 ![Knowledge Test 04 result](images/KT-04.png)
 
-I completed Knowledge Test 04 – Internetworking and scored **6.86 / 10 (68.6%)** on 9 questions.
+I did the Week 4 Knowledge Test on Internetworking and got **6.86 out of 10 (68.6%)**.
 
-I got the question on [topic] wrong. I thought [your answer], but the correct answer is [correct answer] because [reason].
+The question I got wrong was about [topic]. I picked [your answer] but the right answer was [correct answer]. Now I understand it is because [reason].
 
-I answered every question at certainty level 1 (C=1). The feedback said I was "a bit under-confident", because my accuracy (69%) was just above the optimal range for C=1. Next time I will choose a higher certainty on questions I am sure about, since certainty-based marking rewards confident correct answers.
-
----
-
-## Task 2: Project Initiation
-
-I am not in a project group. I am working on the project individually and will confirm this arrangement with my tutor.
+I used certainty level 1 for all 9 questions because I was not fully sure about my answers. The feedback said I was "a bit under-confident". So next time, if I am sure about an answer, I will pick a higher certainty to get more marks.
 
 ---
 
-## Task 3: Network Diagrams
+## Task 2 - Project Initiation
 
-### a) Switched LAN: one switch and four PCs
-
-![Task 3a – switched LAN](images/week4-task3-lana.png)
-
-Original file: [week4-task3-lana.drawio](images/week4-task3-lana.drawio)
-
-All four PCs connect to switch SW1 with their own dedicated link, so this is a star topology. The switch forwards frames only to the PC they are addressed to (using MAC addresses), rather than sending them to every device.
-
-### b) Three switches and eight PCs in a star topology
-
-![Task 3b – three switch LAN](images/week4-task3-lanb.png)
-
-Original file: [week4-task3-lanb.drawio](week4-task3-lanb.drawio)
-
-PC1–PC4 connect to SW1 and PC5–PC8 connect to SW2. Both switches connect to SW-Core, forming a star of stars. If PC1 sends to PC5, the frame travels PC1 → SW1 → SW-Core → SW2 → PC5. The design is easy to extend by adding another switch to SW-Core, but SW-Core is a single point of failure: if it stops working, PCs on SW1 can no longer reach PCs on SW2.
+I am not in a group for the project. I am doing the project on my own and I will check this with my tutor.
 
 ---
 
-## Task 4: Analyse Ping Packets
+## Task 3 - Network Diagrams
 
-### Ping command and output
+I drew both diagrams in draw.io. I used simple rectangles for the switches and PCs and plain lines for the links (no arrows), like the "Drawing Network Diagrams" guide says.
 
-I cleared the ARP cache first (in PowerShell as Administrator) so that ARP would be needed again, then pinged the OpenWRT virtual machine:
+### a) One switch and four PCs
+
+![Task 3a network diagram](images/week4-task3-lana.png)
+
+Draw.io file: [week4-task3-lana.drawio](images/week4-task3-lana.drawio)
+
+Every PC has its own cable to the switch SW1, so this is a star topology. The switch looks at the MAC address and sends the frame only to the PC it is meant for.
+
+### b) Three switches and eight PCs (star topology)
+
+![Task 3b network diagram](images/week4-task3-lanb.png)
+
+Draw.io file: [week4-task3-lanb.drawio](week4-task3-lanb.drawio)
+
+PC1 to PC4 are connected to SW1, and PC5 to PC8 are connected to SW2. Then SW1 and SW2 both connect to SW-Core in the middle.
+
+One thing I noticed: if PC1 wants to send something to PC5, it has to go PC1 → SW1 → SW-Core → SW2 → PC5. So SW-Core is really important. If it stops working, the two sides cannot talk to each other anymore, but PCs on the same switch still can.
+
+---
+
+## Task 4 - Ping Analysis
+
+I did not have my capture file from before, so I did the ping again. First I cleared the ARP table (I had to open PowerShell as Administrator, otherwise it gave an "requires elevation" error), then I pinged the OpenWRT VM.
 
 ```powershell
 PS C:\WINDOWS\system32> arp -d *
@@ -65,67 +69,78 @@ Approximate round trip times in milli-seconds:
     Minimum = 38ms, Maximum = 2063ms, Average = 619ms
 ```
 
+All 4 pings got a reply, so the connection is working.
+
 <!-- If you add a Wireshark screenshot later, put it here:
 ![Wireshark capture](images/week4-task4-wireshark.png)
 -->
 
 ### Network diagram
 
-![Task 4 – ping network](images/week4-task4-ping.png)
+![Task 4 ping network diagram](images/week4-task4-ping.png)
 
-Original file: [week4-task4-ping.drawio](week4-task4-ping.drawio)
+Draw.io file: [week4-task4-ping.drawio](week4-task4-ping.drawio)
 
-The Windows host and the OpenWRT VM (192.168.1.2) are on the same local network, connected through a virtual switch. Because they are on the same network, the ping is sent directly and no router is needed.
+My Windows computer and the OpenWRT VM (192.168.1.2) are on the same network, connected through the VirtualBox virtual switch. There is no router in between, so the ping goes straight to OpenWRT.
 
-### Purpose of ARP packets
+### What is ARP for?
 
-To send the ping, my Windows host already knew OpenWRT's **IP address** (192.168.1.2). However, on an Ethernet LAN a frame must be addressed to a **MAC address**, and after running `arp -d *` the host no longer had this mapping.
+My computer knew the IP address of OpenWRT (192.168.1.2), but that is not enough on a LAN. Ethernet needs the MAC address to deliver the frame. Because I cleared the ARP table, my computer did not know the MAC address anymore, so it had to use ARP first.
 
-- **ARP request:** my Windows host sent a **broadcast** to `ff:ff:ff:ff:ff:ff`, received by every device on the LAN, asking "Who has 192.168.1.2? Tell [my Windows IP]".
-- **ARP reply:** only OpenWRT answered, sending a **unicast** reply back to my host: "192.168.1.2 is at [OpenWRT MAC]".
-- My host saved this in its ARP cache, so the next pings did not need ARP again.
+- **Who sent the ARP request?** My Windows computer.
+- **Who did it go to?** Everyone on the network, because it is a broadcast (destination MAC `ff:ff:ff:ff:ff:ff`).
+- **What did it ask?** "Who has 192.168.1.2? Tell [my Windows IP]."
+- **The reply:** Only OpenWRT answered, and it sent the reply straight back to my computer with its MAC address.
 
-This explains my ping output: the **first reply took 2063 ms**, but the later replies took only 38–310 ms. The first ping had to wait for ARP to resolve the MAC address first.
+After that my computer saves the MAC address in the ARP table, so it does not need to ask again for the next pings.
+
+I think this is why my **first ping took 2063 ms** but the others were only 38 to 310 ms. The first one had to wait for ARP to finish.
 
 ### ARP packet diagram (1st ARP packet)
 
 ![ARP packet diagram](images/week4-task4-arp-packet.png)
 
-Original file: [week4-task4-arp-packet.drawio](week4-task4-arp-packet.drawio)
+Draw.io file: [week4-task4-arp-packet.drawio](week4-task4-arp-packet.drawio)
 
-The ARP message (28 bytes) is carried directly inside an Ethernet frame. The Ethernet header (14 bytes) holds the destination MAC (6 bytes, the broadcast address for a request), the source MAC (6 bytes) and the Type field (2 bytes, 0x0806 = ARP). The total is 42 bytes. ARP has no IP header because it works at the data link level, below IP.
+- Ethernet header = 14 bytes (Destination MAC 6 + Source MAC 6 + Type 2)
+- ARP message = 28 bytes
+- **Total = 42 bytes**
 
-### First two ICMP packets
+The Type field is 0x0806, which means ARP. I found it interesting that there is no IP header in the ARP packet. ARP sits directly inside Ethernet because its job is to find the MAC address before IP can be used on the LAN.
 
-1. **ICMP Echo Request (type 8):** sent from my Windows host to 192.168.1.2. It carries 32 bytes of data (`bytes=32` in the output), plus an identifier and sequence number.
-2. **ICMP Echo Reply (type 0):** sent from 192.168.1.2 back to my host, with the **same identifier and sequence number**, so ping can match each reply to its request and calculate the round-trip time.
+### The first two ICMP packets
 
-The reply had **TTL=64**. Linux systems usually start at TTL 64 while Windows uses 128, so this confirms the reply came from the Linux-based OpenWRT. Since 64 is the starting value, the packet crossed no routers, which matches my diagram where both devices are on the same LAN.
+1. **Echo Request (ICMP type 8)** - my computer sends this to 192.168.1.2. It has 32 bytes of data (you can see `bytes=32` in the output).
+2. **Echo Reply (ICMP type 0)** - OpenWRT sends this back to my computer.
+
+The request and the reply have the same identifier and sequence number. That is how ping knows which reply belongs to which request and can work out the time.
+
+I also looked at the **TTL=64** in the reply. Linux usually starts TTL at 64 and Windows at 128, so this shows the reply really came from OpenWRT (which runs on Linux). Also, since it is still 64, the packet did not pass through any router, which matches my diagram.
 
 ### ICMP packet diagram (1st ICMP packet)
 
 ![ICMP packet diagram](images/week4-task4-icmp-packet.png)
 
-Original file: [week4-task4-icmp-packet.drawio](week4-task4-icmp-packet.drawio)
+Draw.io file: [week4-task4-icmp-packet.drawio](week4-task4-icmp-packet.drawio)
 
-The Echo Request shows encapsulation across layers:
+| Part | Size |
+|---|---|
+| Ethernet header (Type 0x0800 = IPv4) | 14 bytes |
+| IP header (Protocol 1 = ICMP) | 20 bytes |
+| ICMP header | 8 bytes |
+| ICMP data | 32 bytes |
+| **Total** | **74 bytes** |
 
-| Layer | Header / part | Size |
-|---|---|---|
-| Data link | Ethernet header (Type 0x0800 = IPv4) | 14 bytes |
-| Network | IP header (Protocol 1 = ICMP) | 20 bytes |
-| Network (ICMP) | ICMP header | 8 bytes |
-| Data | ICMP data | 32 bytes |
-| | **Total frame** | **74 bytes** |
-
-The ICMP message (8 + 32 = 40 bytes) is inside the IP datagram (20 + 40 = 60 bytes), which is inside the Ethernet frame (14 + 60 = 74 bytes).
+This shows encapsulation. The ICMP message (8 + 32 = 40 bytes) is inside the IP packet (20 + 40 = 60 bytes), and the IP packet is inside the Ethernet frame (14 + 60 = 74 bytes). Each layer just adds its own header in front.
 
 ---
 
 ## Reflection
 
-This week connected the lecture on internetworking with a real test. The lecture explained that IP addresses and routing tables get packets **across** networks, while this task showed that on the **local** network a device still needs the MAC address, and ARP is what finds it. I did not realise before that a simple ping actually uses two protocols (ARP and ICMP). The slow first reply (2063 ms) was a clear example of ARP happening before the ping could be sent.
+Before this week I thought ping was just one simple thing, but it actually uses two protocols: ARP to find the MAC address and ICMP for the ping itself. The lecture was about how IP and routing tables send packets across different networks, and this task showed the other side: even on the same LAN, the computer still needs the MAC address.
 
-Drawing the packet diagrams helped me understand encapsulation: each layer adds its own header, so the 32 bytes of ping data became a 74-byte frame. I also learned that the TTL value gives a hint about the operating system of the device replying.
+The part that made it click for me was the slow first ping. I cleared the ARP table, and the first reply was much slower than the rest, which makes sense now.
 
-What I found tricky: [write one thing that was difficult for you, e.g. running `arp -d *` needed Administrator rights, or understanding why ARP has no IP header].
+Drawing the packet diagrams also helped me understand encapsulation. The ping only sends 32 bytes of data, but with all the headers it becomes 74 bytes.
+
+The tricky part for me was [write something that was hard for you, e.g. getting the admin PowerShell to work, or understanding why ARP has no IP header]. Next time I want to capture the packets in Wireshark as well, so I can see the ARP and ICMP packets myself instead of only the ping output.
