@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="8YgWHEe5g2AnrJMwtMqC">
+    <mxGraphModel dx="774" dy="417" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xuDEmq5d6giepPhNvH7b-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;Ethernet header: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;14 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="160" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;IP header: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;20 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="160" x="240" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;ICMP header: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;8 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="160" x="400" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;ICMP data: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;32 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="160" x="560" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;IP datagram: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;60 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="480" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&#xa;&lt;span&gt;ICMP message: &lt;/span&gt;&lt;strong&gt;&lt;span&gt;40 bytes&lt;/span&gt;&lt;/strong&gt;&#xa;&#xa;" vertex="1">
+          <mxGeometry height="40" width="320" x="400" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="xuDEmq5d6giepPhNvH7b-7" parent="1" style="text;whiteSpace=wrap;html=1;" value="Sumita Talukdar Trina" vertex="1">
+          <mxGeometry height="40" width="150" x="200" y="290" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
