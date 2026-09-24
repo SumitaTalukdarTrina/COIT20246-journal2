@@ -1,13 +1,12 @@
 # Week 4 Journal – Network Technologies / Internetworking
 
 **Student Name:** Sumita Talukdar Trina
-**Student ID:** [your student ID]
 
 ---
 
 ## Task 1: Knowledge Test
 
-![Knowledge Test 04 result](KT-04.png)
+![Knowledge Test 04 result](images/KT-04.png)
 
 I completed Knowledge Test 04 – Internetworking and scored **6.86 / 10 (68.6%)** on 9 questions.
 
@@ -27,15 +26,15 @@ I am not in a project group. I am working on the project individually and will c
 
 ### a) Switched LAN: one switch and four PCs
 
-![Task 3a – switched LAN](week4-task3-lana.png)
+![Task 3a – switched LAN](images/week4-task3-lana.png)
 
-Original file: [week4-task3-lana.drawio](week4-task3-lana.drawio)
+Original file: [week4-task3-lana.drawio](images/week4-task3-lana.drawio)
 
 All four PCs connect to switch SW1 with their own dedicated link, so this is a star topology. The switch forwards frames only to the PC they are addressed to (using MAC addresses), rather than sending them to every device.
 
 ### b) Three switches and eight PCs in a star topology
 
-![Task 3b – three switch LAN](week4-task3-lanb.png)
+![Task 3b – three switch LAN](images/week4-task3-lanb.png)
 
 Original file: [week4-task3-lanb.drawio](week4-task3-lanb.drawio)
 
@@ -67,12 +66,12 @@ Approximate round trip times in milli-seconds:
 ```
 
 <!-- If you add a Wireshark screenshot later, put it here:
-![Wireshark capture](week4-task4-wireshark.png)
+![Wireshark capture](images/week4-task4-wireshark.png)
 -->
 
 ### Network diagram
 
-![Task 4 – ping network](week4-task4-ping.png)
+![Task 4 – ping network](images/week4-task4-ping.png)
 
 Original file: [week4-task4-ping.drawio](week4-task4-ping.drawio)
 
@@ -90,7 +89,7 @@ This explains my ping output: the **first reply took 2063 ms**, but the later re
 
 ### ARP packet diagram (1st ARP packet)
 
-![ARP packet diagram](week4-task4-arp-packet.png)
+![ARP packet diagram](images/week4-task4-arp-packet.png)
 
 Original file: [week4-task4-arp-packet.drawio](week4-task4-arp-packet.drawio)
 
@@ -105,7 +104,7 @@ The reply had **TTL=64**. Linux systems usually start at TTL 64 while Windows us
 
 ### ICMP packet diagram (1st ICMP packet)
 
-![ICMP packet diagram](week4-task4-icmp-packet.png)
+![ICMP packet diagram](images/week4-task4-icmp-packet.png)
 
 Original file: [week4-task4-icmp-packet.drawio](week4-task4-icmp-packet.drawio)
 
