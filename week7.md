@@ -138,7 +138,7 @@ I do not have a separate project repository, so this screenshot is from my journ
 
 ![GitHub Insights Contributors](images/week7-task4-commits.png)
 
-All [number] commits are mine, because I am the only contributor. So my share is 100%, but that is not a real comparison, since there is no one to compare with. A team in my class with 3 or 4 members would have more total commits, and their graph would show whether the work was shared equally.
+All the commits are mine because I am the only one working on it. So I cannot really compare with other team members. Teams in my class with 3 or 4 people would have more commits in total, and their graph would show if everyone did an equal part.
 
 The bigger problem the graph shows is **timing**. All my commits happened on the same day, 24 September, instead of being spread across the weeks. The assessment says the commit history must show regular weekly entries. So for the rest of the unit, I will commit after every tutorial, even if the week is not finished, so the graph shows steady work instead of one big spike.
 
