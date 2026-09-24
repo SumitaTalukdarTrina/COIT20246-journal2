@@ -81,8 +81,6 @@ I gave each router the .1 address on its LAN so it is easy to remember as the ga
 
 ![Task 3 network diagram](images/week5-task3-network.png)
 
-Draw.io file: [week5-task3-network.drawio](images/week5-task3-network.drawio)
-
 ### c) Routing tables
 
 **PC1, PC2 and PC3** (all the same):
@@ -122,8 +120,6 @@ The PCs only need two rows: their own LAN is direct, and everything else goes to
 Example: PC1 (15.82.1.11) pings PC4 (82.15.1.11), and I capture the packet on **R1's eth0** interface, as it arrives from LAN 1.
 
 ![Task 3 packet diagram](images/week5-task3-packet.png)
-
-Draw.io file: [week5-task3-packet.drawio](images/week5-task3-packet.drawio)
 
 **IP addresses in the packet:**
 - Source IP = 15.82.1.11 (PC1)
