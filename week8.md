@@ -8,17 +8,17 @@
 
 ## Task 1 - Knowledge Test
 
-![Knowledge Test 08 result](images/KT_8.png)
+![Knowledge Test 08 result](images/KT%208.png)
 
-I did the Week 8 Knowledge Test on Attacks and Vulnerabilities (Information Security Protections) and got **10 out of 10 (100%)**. I got all 5 questions right in about 3 minutes.
+I did the Week 8 Knowledge Test on Attacks and Vulnerabilities and got **10 out of 10 (100%)**. All 5 questions right and it only took me about 3 minutes.
 
-I used certainty level 1 for all 5 questions again. The feedback said I was under-confident, and the CBM bonus was -20%, so my accuracy + bonus was only 80%. This is the fifth week in a row I have used C=1 and lost marks even when I got everything right. For Week 9 I am going to use C=2 for every question I can explain, no exceptions.
+But again I used C=1 for everything. The CBM bonus was -20% so my final score was 80% even though I got every question right. I have been doing this every single week and losing marks for no reason. Next week I am actually going to use C=2 when I know the answer. I keep saying this so I have to actually do it.
 
 ---
 
 ## Task 2 - Login to Microsoft Learn on Demand
 
-I registered at msle.learnondemand.net using the training key provided on Moodle and my @cqumail.com address to create a Skillable account. After accepting the EULA, I logged back in using Sign In and Skillable Account, then opened the COIT20246 class to access the Azure Fundamentals lab activities.
+I registered on msle.learnondemand.net with the training key from Moodle and my @cqumail.com email. It took me a couple of minutes to figure out that after registering you have to log out and log back in using Sign In and then Skillable Account, not the same way you registered. Once I was in I found the COIT20246 class and the Azure activities.
 
 ![Lab login](images/loginlab.png)
 
@@ -26,127 +26,100 @@ I registered at msle.learnondemand.net using the training key provided on Moodle
 
 ## Task 3 - Create an Azure Resource
 
-I completed the lab for creating Azure resources. I created a resource group called **rg-gp-static-website** in East US, then created a storage account called **stgpstaticsite65482021** inside it. The storage account uses Azure Blob Storage with Standard performance and Locally-redundant storage (LRS).
+For this task I created a resource group and a storage account in the Azure portal. The resource group is called **rg-gp-static-website** and I created it in East US. Then I made the storage account **stgpstaticsite65482021** inside it, using Azure Blob Storage, Standard performance and LRS redundancy.
 
 ![Resource group created](images/resourcegrpcreated.png)
 
 ![Storage account created](images/Storageaccountcreated.png)
 
-The resources created and what they are for:
+Here is what each resource does:
 
 | Resource | Type | What it is for |
 |---|---|---|
-| rg-gp-static-website | Resource group | A container that holds all the related resources together. It makes it easy to manage and delete them all at once when finished. |
-| stgpstaticsite65482021 | Storage account (StorageV2) | Holds the blob containers and files. Azure Blob Storage can serve static HTML and CSS files directly to browsers, so no web server is needed. |
-| $web (container, created automatically) | Blob container | The special container Azure creates when static website hosting is enabled. Files uploaded here are served to anyone who visits the public URL. |
+| rg-gp-static-website | Resource group | Keeps all the related resources in one place so you can manage or delete them together |
+| stgpstaticsite65482021 | Storage account (StorageV2) | Stores the files. Azure can serve HTML files from here directly to a browser with no web server needed |
+| $web | Blob container (auto-created) | The special container where you put your website files. Azure creates it automatically when you turn on static hosting |
 
-I also enabled **static website hosting** on the storage account and set the index document to `index.html` and the error document to `404.html`. Azure then gave me a public primary endpoint URL: `https://stgpstaticsite65482021.z13.web.core.windows.net/`.
+After that I turned on static website hosting, set the index document to `index.html` and the error page to `404.html`. Azure gave me this public URL for the site: `https://stgpstaticsite65482021.z13.web.core.windows.net/`
 
-![Static website hosting enabled](images/Enable_static_website_hosting.png)
+![Static website hosting enabled](images/Enable%20static%20website%20hosting.png)
 
-The thing I found most interesting is that I never needed to set up a web server. Azure serves the files directly from blob storage. This is a good example of cloud **PaaS** (Platform as a Service): I only manage the content, and Azure manages everything underneath.
+What surprised me here was that I never had to set up a web server at all. I just uploaded files and Azure served them. That is quite different from the OpenWRT web server I set up in Week 6 where I had to SSH in and edit files manually.
 
 ---
 
 ## Task 4 - Create an Azure Virtual Machine and Allow Web Access
 
-After enabling static website hosting, I created the website content. I made two HTML files on the local computer: `index.html` (the landing page) and `404.html` (the custom error page). I uploaded both to the `$web` container.
+For this part I created the actual website content. I opened Notepad and wrote two HTML files: `index.html` for the main page and `404.html` for when someone visits a page that does not exist. Then I uploaded both to the `$web` container.
 
-![Files uploaded to $web container](images/Upload_the_file_to_the__web_container.png)
+![Files uploaded to $web container](images/Upload%20the%20file%20to%20the%20%24web%20container.png)
 
-The container shows both files uploaded successfully with their sizes and access tiers (Hot, Inferred). Hot tier is the default for frequently accessed files, which makes sense for a website that people visit all the time.
+Both files showed up in the container list with their sizes and access tier set to Hot, which means they are ready to serve at any time.
 
-I then visited the primary endpoint URL in a browser and confirmed the page loaded correctly, showing "Version 1 - Landing Page". I also tested the custom 404 page by adding `/fakepage` to the URL, and it showed my custom "Page Not Found" page instead of the generic Azure XML error.
+I opened the primary endpoint URL and the page loaded and showed "Version 1 - Landing Page". I also typed `/fakepage` at the end of the URL to test the 404 page and it worked, showing my custom error page instead of the ugly Azure XML error.
 
-After that, I updated the page content to "Version 2 - Landing Page" by overwriting `index.html` in the container. The change appeared immediately on the website after refreshing the browser.
+Then I made a Version 2 of `index.html` and uploaded it with the overwrite option ticked. When I refreshed the browser it changed to Version 2 straight away. No restart needed, nothing. That is one thing I really liked about blob storage compared to a normal server.
 
-**What the two security rules allow:**
+The two security rules on the VM and what they do:
 
 | Rule | Port | What it allows |
 |---|---|---|
-| default-allow-ssh | 22 | SSH (Secure Shell) access to manage the VM from the command line. This lets the admin log in and make changes, like editing the web page. |
-| AllowAnyHTTPInbound | 80 | HTTP web traffic from any source. This is what lets browsers open the website. Without this rule, the connection times out. |
+| default-allow-ssh | 22 | SSH access so the admin can log into the VM and manage it from the command line |
+| AllowAnyHTTPInbound | 80 | HTTP traffic from the internet so anyone can open the website in a browser |
 
-Without the HTTP rule, anyone trying to visit the website gets a "connection timed out" error, because the firewall blocks all incoming traffic on port 80 by default. Adding the rule immediately makes the site accessible.
+Before I added the HTTP rule, trying to open the website gave a connection timed out error. As soon as I added port 80 it worked. This shows why firewalls and network security groups matter. By default Azure blocks everything and you have to specifically allow what you need.
 
 ---
 
 ## Task 5 - Compare Cloud vs On-premise Costs
 
-I compared a consumer desktop PC from mwave.com.au with a similar Azure virtual machine using the Azure pricing calculator (Australia East region, AUD, pay-as-you-go).
+I looked up a desktop PC on mwave.com.au and compared it with a similar Azure VM using the pricing calculator set to Australia East and AUD.
 
-### The PC I chose
+### Desktop PC
 
 **Dell Pro Micro Desktop PC - Intel i5-14500T, 16GB RAM, 512GB SSD, WiFi+BT, Windows 11 Pro**
-Price: **AUD $1,499.00** (from mwave.com.au)
+Price: **AUD $1,499.00** from mwave.com.au
 
 ![Consumer PC price](images/week8-task5-pc.png)
 
-### The Azure VM I chose
+### Azure VM
 
-**Standard_D2s_v3** - 2 vCPU, 8GB RAM, 16GB temporary storage (Australia East, Linux, pay-as-you-go)
-Monthly cost: **approx. AUD $142/month**
+**Standard_D2s_v3** - 2 vCPU, 8GB RAM, Australia East, Linux, pay-as-you-go
+Cost: **approx. AUD $142/month**
 
 ![Azure pricing calculator](images/week8-task5-azure.png)
 
-### Specifications table
+### Comparison table
 
-| Specification | Desktop PC (Dell i5-14500T) | Azure VM (Standard_D2s_v3) |
+| | Desktop PC (Dell i5-14500T) | Azure VM (D2s_v3) |
 |---|---|---|
-| CPU | Intel Core i5-14500T (14 cores) | 2 vCPU |
+| CPU | Intel i5-14500T, 14 cores | 2 vCPU |
 | RAM | 16 GB | 8 GB |
-| Storage | 512 GB SSD | 16 GB temp + managed disk extra |
-| OS | Windows 11 Pro (included) | Linux (included) |
+| Storage | 512 GB SSD | 16 GB temp (disk extra) |
+| OS | Windows 11 Pro | Linux |
 | Upfront cost | AUD $1,499 | AUD $0 |
-| Monthly cost | ~$0 (after purchase) | ~AUD $142/month |
+| Monthly cost | $0 after purchase | ~AUD $142 |
 | 1-year total | AUD $1,499 | AUD $1,704 |
 | 3-year total | AUD $1,499 | AUD $5,112 |
 
-Note: The Azure estimate does not include managed disk or data transfer costs, so the real Azure cost would be slightly higher.
+The Azure price does not include the managed disk or data transfer so the real cost is a bit higher.
 
-### Discussion of trade-offs
+Looking at the 3-year numbers, the desktop PC is much cheaper if you run it all the time. But that is not the full story.
 
-**Desktop PC advantages:**
-- Much cheaper over 3 years, because you pay once and own the hardware.
-- More powerful CPU (14 cores vs 2 vCPU) and double the RAM for the same cost range.
-- No internet needed to run it once set up.
-- Data stays on your own hardware, which can be important for privacy.
+The PC costs $1,499 upfront no matter what, even if you only need it for two weeks. With Azure you pay nothing upfront and can stop any time. If a company only needs a server for a short project, Azure is much cheaper. Also if the PC breaks you have to pay for repairs or buy a new one. Azure just keeps running.
 
-**Desktop PC disadvantages:**
-- High upfront cost. You pay $1,499 even if you only need the computer for a week.
-- If it breaks, you pay for repairs or a replacement.
-- You have to manage updates, backups and security yourself.
-- It is in one physical location. If the building burns down or is flooded, the data is gone.
-- Cannot scale up easily: to get more power, you buy another machine.
+On the other hand, the PC is faster, has more RAM and does not need internet to work. The data stays on your own hardware which some companies need for legal or privacy reasons.
 
-**Azure VM advantages:**
-- No upfront cost. You pay only for what you use, by the hour.
-- If you only need a VM for a week, you pay for one week and stop.
-- Can scale up or down in minutes: change the VM size or add more VMs.
-- Azure manages the hardware, physical security and some updates.
-- Accessible from anywhere in the world with an internet connection.
-- Built-in redundancy options (LRS, GRS) to protect against data loss.
-
-**Azure VM disadvantages:**
-- Much more expensive over 3 years for constant 24/7 use.
-- Needs a reliable internet connection to access and use it.
-- Running costs never stop as long as the VM is on.
-- Data is stored in Microsoft's data centres, which raises compliance questions for some industries.
-
-**My conclusion:** For a small business or student running a server 24/7 for 3 years, the desktop PC is cheaper overall. But for a company that needs to scale quickly, only runs workloads part-time, or has staff in different countries, the Azure VM is much more flexible. The lecture described this as the difference between **CapEx** (capital expenditure, like buying the PC) and **OpEx** (operational expenditure, like paying monthly for the VM). Most businesses are moving toward OpEx because it is easier to plan and does not require a large upfront investment.
+The lecture talked about CapEx (capital expenditure, like buying the PC) vs OpEx (operational expenditure, like paying monthly for Azure). Most companies now prefer OpEx because it is easier to budget and you do not need a big upfront investment. For a student or a small project the desktop PC makes more sense, but for a business that needs to scale up or down quickly, Azure wins.
 
 ---
 
 ## Reflection
 
-This week's lecture was about Attacks and Vulnerabilities. The main framework from the lecture was the **CIA triad**: Confidentiality, Integrity and Availability. These three things are what security is trying to protect.
+The lecture this week was about Attacks and Vulnerabilities and the CIA triad: Confidentiality, Integrity and Availability.
 
-The Azure lab connected directly to this. My static website has all three concerns:
+Doing the Azure lab made these feel more real than just reading about them. When I created the storage account the default was private, so no one could read the files without permission. That is confidentiality. When I uploaded Version 2 of the website, Azure checked that the file uploaded correctly before making it available. That is integrity. And because Azure runs across multiple data centres, the website stays up even if one server has a problem. That is availability. I did not have to set any of this up myself, it is just how Azure works.
 
-- **Confidentiality:** I used a private container by default. Files in a private container cannot be read unless the user has a key or permission. If I had put sensitive files there instead of a public HTML page, the private setting would protect them.
-- **Integrity:** Azure blob storage uses checksums when uploading and downloading files to detect corruption. When I uploaded Version 2 and it replaced Version 1, Azure confirmed the upload was successful before I could access the new file.
-- **Availability:** The static website uses Azure's infrastructure, which runs across multiple datacenters. Even if one server goes down, the website keeps running. I did not have to do anything to get this. The lecture called this part of why cloud is useful: availability is built in.
+The lecture also covered STRIDE. The one that applies most to my website is information disclosure. If I had accidentally set my container to public when it should have been private, anyone who knew the URL could have downloaded my files. The storage account key is also a risk. If someone got hold of it they could tamper with my files or even delete everything.
 
-The lecture also covered **STRIDE** (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege). Looking at my website, the most obvious threat is **information disclosure** if I accidentally made a container public that should have been private. Another is **tampering**: anyone with the storage account key could overwrite my files. The lecture's point that you have to think about these threats before you build, not after, made sense after doing this lab.
-
-The part I found most interesting was learning about the **shared responsibility model** from last week, and how it applies here. Azure is responsible for the physical datacentres and the infrastructure. I am responsible for what I put in the storage account, who has the keys, and whether my containers are private or public. If I got that wrong, it is my mistake, not Azure's.
+The thing that stuck with me is that security is my responsibility even when I use cloud services. Azure looks after the physical data centres and the hardware, but I am the one who decides if a container is public or private, who has the keys and what rules are on the firewall. The shared responsibility model means I cannot blame Azure if I make a mistake with my own settings.
