@@ -80,14 +80,12 @@ I looked up a desktop PC on mwave.com.au and compared it with a similar Azure VM
 **Dell Pro Micro Desktop PC - Intel i5-14500T, 16GB RAM, 512GB SSD, WiFi+BT, Windows 11 Pro**
 Price: **AUD $1,499.00** from mwave.com.au
 
-![Consumer PC price](images/week8-task5-pc.png)
+![Consumer PC price](images/pcprice.png)
 
 ### Azure VM
 
 **Standard_D2s_v3** - 2 vCPU, 8GB RAM, Australia East, Linux, pay-as-you-go
 Cost: **approx. AUD $142/month**
-
-![Azure pricing calculator](images/week8-task5-azure.png)
 
 ### Comparison table
 
